@@ -1,0 +1,45 @@
+@model GameStoreMVC.Models.Game
+
+@{
+    ViewData["Title"] = "Excluir Jogo";
+}
+
+<div class="row justify-content-center mt-5 mb-5">
+    <div class="col-md-6">
+        <div class="card shadow-lg bg-dark text-white border-danger" style="border-radius: 15px;">
+            <div class="card-header border-bottom border-secondary p-4 bg-danger text-white" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
+                <h3 class="mb-0 fw-bold"><i class="bi bi-exclamation-triangle-fill"></i> Confirmar Exclusão</h3>
+            </div>
+            <div class="card-body p-4 text-center">
+                <p class="fs-5 mt-3">Tem certeza de que deseja excluir o jogo abaixo?</p>
+                
+                <div class="bg-secondary p-3 rounded mt-4 mb-4 d-flex align-items-center justify-content-center gap-3">
+                    @if (!string.IsNullOrEmpty(Model.UrlImagem))
+                    {
+                        <img src="@Model.UrlImagem" alt="img" class="rounded" style="width: 80px; height: 80px; object-fit: cover;" />
+                    }
+                    else
+                    {
+                        <div class="bg-dark rounded d-flex justify-content-center align-items-center" style="width: 80px; height: 80px;">
+                            <i class="bi bi-controller fs-1 text-light"></i>
+                        </div>
+                    }
+                    <div class="text-start">
+                        <h4 class="fw-bold mb-0 text-white">@Model.Titulo</h4>
+                        <p class="text-white-50 mb-0">@Model.Preco.ToString("C")</p>
+                    </div>
+                </div>
+
+                <p class="text-danger small fw-bold">Esta ação não pode ser desfeita.</p>
+
+                <form asp-action="Delete" method="post" class="mt-4">
+                    <input type="hidden" asp-for="Id" />
+                    <div class="d-flex justify-content-center gap-2">
+                        <button type="submit" class="btn btn-danger fw-bold px-4">Sim, Excluir</button>
+                        <a asp-action="Index" class="btn btn-outline-light px-4">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

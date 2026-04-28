@@ -1,11 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
  
 namespace GameStoreMVC.Models
 {
-    public class Usuario
+    public class CadastroViewModel
     {
-        public int Id { get; set; }
- 
+        [Required(ErrorMessage = "O Nome é obrigatório.")]
         public string Nome { get; set; } = string.Empty;
  
         [Required(ErrorMessage = "O Email é obrigatório.")]
@@ -15,10 +14,10 @@ namespace GameStoreMVC.Models
         [Required(ErrorMessage = "A Senha é obrigatória.")]
         [DataType(DataType.Password)]
         public string Senha { get; set; } = string.Empty;
-       
-        // Propriedade usada apenas em memória, não vai pro banco diretamente (o banco terá SenhaHash)
-        public string SenhaHash { get; set; } = string.Empty;
  
-        public bool IsAdmin { get; set; }
+        [Required(ErrorMessage = "A Confirmação de Senha é obrigatória.")]
+        [DataType(DataType.Password)]
+        [Compare("Senha", ErrorMessage = "As senhas não coincidem.")]
+        public string ConfirmacaoSenha { get; set; } = string.Empty;
     }
 }
