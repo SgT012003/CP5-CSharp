@@ -1,1 +1,69 @@
-﻿
+@model IEnumerable<GameStoreMVC.Models.Game>
+
+@{
+    ViewData["Title"] = "Gerenciar Jogos";
+}
+
+<div class="container mt-4 mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold"><i class="bi bi-controller"></i> Gerenciamento de Jogos</h2>
+        <a asp-action="Create" class="btn fw-bold" style="background-color: #00ff88; color: #000;">
+            <i class="bi bi-plus-circle"></i> Novo Jogo
+        </a>
+    </div>
+
+    <div class="card bg-dark text-white shadow" style="border: 1px solid #333;">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-dark table-hover mb-0 align-middle">
+                    <thead style="border-bottom: 2px solid #00ff88;">
+                        <tr>
+                            <th>ID</th>
+                            <th>Imagem</th>
+                            <th>Título</th>
+                            <th>Preço</th>
+                            <th class="text-end">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Id</td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.UrlImagem))
+                                        {
+                                            <img src="@item.UrlImagem" alt="img" class="rounded" style="width: 50px; height: 50px; object-fit: cover;" />
+                                        }
+                                        else
+                                        {
+                                            <div class="bg-secondary rounded d-flex justify-content-center align-items-center" style="width: 50px; height: 50px;">
+                                                <i class="bi bi-image text-light"></i>
+                                            </div>
+                                        }
+                                    </td>
+                                    <td class="fw-bold">@item.Titulo</td>
+                                    <td style="color: #00ff88;">@item.Preco.ToString("C")</td>
+                                    <td class="text-end">
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-light me-2"><i class="bi bi-pencil"></i> Editar</a>
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i> Excluir</a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center py-4 text-muted">
+                                    Nenhum jogo cadastrado. Clique em "Novo Jogo" para adicionar.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
